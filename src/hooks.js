@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { v4 as uuid } from "uuid";
 
 function useToggle(initial) {
   const [state, setState] = useState(initial);
@@ -8,4 +10,16 @@ function useToggle(initial) {
   return [state, toggleState];
 }
 
-export { useToggle };
+function useAxios(url) {
+  const [data, setData] = useState([]);
+  const requestData = () => {
+    axios
+      .get(url)
+      .then((res) =>
+        setData((oldData) => [...oldData, { ...res.data, id: uuid() }])
+      );
+  };
+  return [data, requestData];
+}
+
+export { useToggle, useAxios };
