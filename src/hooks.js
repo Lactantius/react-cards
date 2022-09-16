@@ -10,11 +10,11 @@ function useToggle(initial) {
   return [state, toggleState];
 }
 
-function useAxios(url) {
+function useAxios(endpoint) {
   const [data, setData] = useState([]);
-  const requestData = () => {
+  const requestData = (resource) => {
     axios
-      .get(url)
+      .get(endpoint + resource)
       .then((res) =>
         setData((oldData) => [...oldData, { ...res.data, id: uuid() }])
       );
